@@ -15,7 +15,7 @@
 [GPU](https://www.nvidia.com/en-us/data-center/h100/)
 [MFU](#性能)
 
-[HuggingFace](https://huggingface.co/<org>)
+[HuggingFace](https://huggingface.co/openbmb/MiniCPM4-ForgeTrain-0.5B)
 [ModelScope](https://modelscope.cn/<org>)
 [Docs](./docs)
 [Discord](https://discord.gg/<invite>)
@@ -226,7 +226,7 @@ python scripts/convert_to_hf.py \
 
 | 模型                | 参数量   | 架构                                               | HuggingFace                             | ModelScope                          |
 | ----------------- | ----- | ------------------------------------------------ | --------------------------------------- | ----------------------------------- |
-| **MiniCPM4-0.5B** | 0.5 B | 24 层 Transformer · GQA (16Q/2KV) · SwiGLU · RoPE | [🤗 link](https://huggingface.co/<org>) | [link](https://modelscope.cn/<org>) |
+| **MiniCPM4-0.5B** | 0.5 B | 24 层 Transformer · GQA (16Q/2KV) · SwiGLU · RoPE | [🤗 link](https://huggingface.co/openbmb/MiniCPM4-ForgeTrain-0.5B) | [link](https://modelscope.cn/<org>) |
 
 
 ### 硬件要求

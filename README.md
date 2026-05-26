@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="./assets/logo.png" alt="ForgeTrain" width="90%">
-</p>
+
 
 # ForgeTrain
 
@@ -12,7 +10,7 @@
 
 ---
 
-> **An LLM pretraining framework written end-to-end by an AI Agent Loop with zero human edits — plus the Harness that produced the pretraining framework *(coming soon)*.**
+> **An LLM pretraining framework written end-to-end by an AI Agent Loop with zero human edits — plus the Harness that produced the pretraining framework (coming soon).**
 >
 > **Current release: v0.1.0** (NVIDIA H100 · MiniCPM4-0.5B / MiniCPM4-8B training frameworks; matching Harness *coming soon*)
 
@@ -22,7 +20,7 @@
 
 - 🤖 **100% Agent-Loop Authored** — the entire framework produced by an AI Agent running in auto-loop mode, with zero manual edits
 - 🔄 **Self-Diagnosing Agent Loop** — read reference → implement → launch job → parse logs → root-cause → patch → pass gate → commit, fully autonomous
-- 🚀 **44.13% MFU on H100** — ~10% above the Megatron-LM baseline (~40%), validated on 64× H100 with BF16, DP-only
+- 🚀 **44.13% MFU on H100** — ~~10% above the Megatron-LM baseline (~~40%), validated on 64× H100 with BF16, DP-only
 - ✅ **Production-Validated** — MiniCPM4-0.5B fully pretrained, real model weights produced (not a demo)
 - 🛠️ **GEMM + Attention kernels authored by the agent loop** — **per-op MFU up to 90%**; FlashAttention written from scratch, outperforms Transformer Engine / FA3, on par with FA4
 
@@ -38,15 +36,17 @@
 
 ## Feature Comparison
 
-| Feature | **ForgeTrain** | Megatron-LM |
-|---------|:-:|:-:|
-| MFU on H100 (MiniCPM4-0.5B, BF16, DP) | **44.13%** | ~40% |
-| 100% AI-Authored Code | ✅ | ❌ |
-| CuTeDSL custom GEMMs (AOT C-export) | ✅ (5 GEMMs) | ❌ |
-| Custom FlashAttention (on par with FA4) | ✅ (self-built CuTeDSL impl) | ❌ (uses upstream TE / FA) |
-| Checkpoint → HuggingFace export | ✅ (one script) | Manual |
 
-<sub>Also supports CUDA Graph, Triton fused kernels, and comm-compute overlap out of the box.</sub>
+| Feature                                 | **ForgeTrain**              | Megatron-LM               |
+| --------------------------------------- | --------------------------- | ------------------------- |
+| MFU on H100 (MiniCPM4-0.5B, BF16, DP)   | **44.13%**                  | ~40%                      |
+| 100% AI-Authored Code                   | ✅                           | ❌                         |
+| CuTeDSL custom GEMMs (AOT C-export)     | ✅ (5 GEMMs)                 | ❌                         |
+| Custom FlashAttention (on par with FA4) | ✅ (self-built CuTeDSL impl) | ❌ (uses upstream TE / FA) |
+| Checkpoint → HuggingFace export         | ✅ (one script)              | Manual                    |
+
+
+Also supports CUDA Graph, Triton fused kernels, and comm-compute overlap out of the box.
 
 > Comparison based on Megatron-LM v0.15 on the same hardware (H100, SM90). ForgeTrain v1 is scoped to MiniCPM4-0.5B (DP-only) and MiniCPM4-8B (TP=2) × BF16; Megatron-LM supports broader model families and parallelism strategies.
 
@@ -113,11 +113,13 @@ If anything fails, dig into the source on your own — do not ask me.
 
 This repo bundles a family of subprojects in a strict **producer / product** relationship:
 
-| Subdirectory | Role |
-|---|---|
-| `harness/` *(coming soon)* | **Harness** — the scaffolding that drives an Agent Loop to autonomously build a training framework |
-| `exports/train_engine_0.5B/` | **TrainingEngine (0.5B)** — produced end-to-end by `harness/` *(coming soon)*; targets MiniCPM4-0.5B at 44.13% MFU on 8× H100 |
+
+| Subdirectory                 | Role                                                                                                                                              |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `harness/` *(coming soon)*   | **Harness** — the scaffolding that drives an Agent Loop to autonomously build a training framework                                                |
+| `exports/train_engine_0.5B/` | **TrainingEngine (0.5B)** — produced end-to-end by `harness/` *(coming soon)*; targets MiniCPM4-0.5B at 44.13% MFU on 8× H100                     |
 | `exports/train_engine_8b/`   | **TrainingEngine (8B)** — also produced by `harness/` *(coming soon)*; targets MiniCPM4-8B with TP=2 / DP=4 at 50.9% MFU on a single 8× H100 host |
+
 
 ```
  harness/  ──(bash agent-loop.sh, zero human input)──▶  exports/train_engine_0.5B/
@@ -194,7 +196,7 @@ Each step logs a line like:
 
 On 8× H100 with BF16, expect **MFU ~44%** and step time ~XXXms for GBS=1280 / MBS=10 / seq=4096.
 
-> Full documentation including multi-node training, checkpoint resume, and HuggingFace export → [`exports/train_engine_0.5B/README.md`](./exports/train_engine_0.5B/README.md) · [`exports/train_engine_8b/README.md`](./exports/train_engine_8b/README.md)
+> Full documentation including multi-node training, checkpoint resume, and HuggingFace export → `[exports/train_engine_0.5B/README.md](./exports/train_engine_0.5B/README.md)` · `[exports/train_engine_8b/README.md](./exports/train_engine_8b/README.md)`
 
 ---
 
@@ -222,14 +224,16 @@ On 8× H100 with BF16, expect **MFU ~44%** and step time ~XXXms for GBS=1280 / M
 
 ## Performance
 
-| Metric | ForgeTrain | Megatron-LM (baseline) |
-|---|---|---|
-| **MFU** | **44.13%** | ~40% |
-| **MFU improvement** | **+10%** | — |
+
+| Metric              | ForgeTrain | Megatron-LM (baseline) |
+| ------------------- | ---------- | ---------------------- |
+| **MFU**             | **44.13%** | ~40%                   |
+| **MFU improvement** | **+10%**   | —                      |
+
 
 > Test conditions: MiniCPM4-0.5B · 64× H100 · BF16 · DP-only.
 
-> Full performance guide → [`exports/train_engine_0.5B/README.md`](./exports/train_engine_0.5B/README.md) · [`exports/train_engine_8b/README.md`](./exports/train_engine_8b/README.md)
+> Full performance guide → `[exports/train_engine_0.5B/README.md](./exports/train_engine_0.5B/README.md)` · `[exports/train_engine_8b/README.md](./exports/train_engine_8b/README.md)`
 
 ---
 
@@ -248,7 +252,7 @@ Contributions are welcome! Here are some ways to help:
 
 Licensed under the [Apache License 2.0](./LICENSE).
 
-The vendored `exports/train_engine_0.5B/src/quack/` and `exports/train_engine_8b/src/quack/` snapshots retain their upstream copyright headers; see [`exports/train_engine_0.5B/src/quack/NOTICE.md`](./exports/train_engine_0.5B/src/quack/NOTICE.md) and [`exports/train_engine_8b/src/quack/NOTICE.md`](./exports/train_engine_8b/src/quack/NOTICE.md) for provenance. Built on a reference training stack (Megatron-LM v0.15 in this reproduction) and the Cursor Coding Agent; data and tokenizers follow MiniCPM4-0.5B / MiniCPM4-8B upstream.
+The vendored `exports/train_engine_0.5B/src/quack/` and `exports/train_engine_8b/src/quack/` snapshots retain their upstream copyright headers; see `[exports/train_engine_0.5B/src/quack/NOTICE.md](./exports/train_engine_0.5B/src/quack/NOTICE.md)` and `[exports/train_engine_8b/src/quack/NOTICE.md](./exports/train_engine_8b/src/quack/NOTICE.md)` for provenance. Built on a reference training stack (Megatron-LM v0.15 in this reproduction) and the Cursor Coding Agent; data and tokenizers follow MiniCPM4-0.5B / MiniCPM4-8B upstream.
 
 ---
 
@@ -281,11 +285,14 @@ If you find this project useful, please consider citing:
 
 ## Hardware / Software Baseline
 
-| Item | Requirement |
-|---|---|
-| GPU | NVIDIA H100 80GB (SM90, Hopper) |
-| GPU count | 8× H100 for full gates / pretraining; 1× H100 for early alignment |
-| CUDA | 12.x |
-| PyTorch | ≥ 2.4 |
-| Python | ≥ 3.11 |
-| Validated scope | MiniCPM4-0.5B (DP-only) / MiniCPM4-8B (TP=2) × H100 × BF16 |
+
+| Item            | Requirement                                                       |
+| --------------- | ----------------------------------------------------------------- |
+| GPU             | NVIDIA H100 80GB (SM90, Hopper)                                   |
+| GPU count       | 8× H100 for full gates / pretraining; 1× H100 for early alignment |
+| CUDA            | 12.x                                                              |
+| PyTorch         | ≥ 2.4                                                             |
+| Python          | ≥ 3.11                                                            |
+| Validated scope | MiniCPM4-0.5B (DP-only) / MiniCPM4-8B (TP=2) × H100 × BF16        |
+
+
