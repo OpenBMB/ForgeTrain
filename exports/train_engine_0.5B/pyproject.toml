@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "training-engine-tensor"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "torch>=2.4",
+    "triton>=3.3",
+    "transformer-engine>=1.0",
+    "nvidia-cutlass==4.4.2",
+    "nvidia-cutlass-dsl==4.4.2",
+    "numpy",
+    "datasets",
+    "transformers",
+    "sentencepiece",
+]
+
+[project.optional-dependencies]
+flash = ["flash-attn"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["training_engine_tensor*"]
+
+[tool.setuptools.package-data]
+"training_engine_tensor.ops" = ["*/register.toml"]
+
+# ---------- Test runner (pytest) ----------
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+# ---------- Type checker (mypy) ----------
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+strict_equality = true
+check_untyped_defs = true
+disallow_untyped_defs = false
+no_implicit_optional = true
+
+[[tool.mypy.overrides]]
+module = ["tomli", "torch", "torch.*", "transformer_engine", "training_engine_tensor.*", "modelbest_sdk", "cutlass", "cutlass.*", "triton", "triton.*"]
+ignore_missing_imports = true

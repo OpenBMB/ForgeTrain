@@ -1,0 +1,10 @@
+# Env vars used by the FC1 GEMM kernel.
+
+[env_vars]
+CUTEDSL_CACHE_ROOT = { default = "/tmp", description = "CuTeDSL kernel cache directory" }
+CUDA_HOME = { default = "/usr/local/cuda", description = "CUDA toolkit path" }
+CUTLASS_INSTALL_DIR = { default = "", description = "CUTLASS install directory" }
+GEMM_FC1_WGRAD_BACKEND = { default = "cutedsl", description = "Wgrad GEMM backend (cutedsl/cublas)" }
+GEMM_FC1_PARALLEL_BWD = { default = "0", description = "Enable parallel backward execution" }
+GEMM_FC1_WGRAD_SWIZZLE = { default = "4", description = "Wgrad kernel swizzle size" }
+GEMM_FC1_BACKEND = { default = "cutedsl", description = "FC1 GEMM backend selection" }

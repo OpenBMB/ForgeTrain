@@ -1,0 +1,21 @@
+target-version = "py311"
+line-length = 120
+src = ["src"]
+
+[lint]
+select = [
+    "F",   # Pyflakes (unused imports, undefined names, etc.)
+    "I",   # isort (import ordering)
+    "UP",  # pyupgrade (modernize syntax for target-version)
+    "B",   # flake8-bugbear (common Python anti-patterns)
+    "ARG", # flake8-unused-arguments
+]
+ignore = [
+    "B905",  # zip-without-explicit-strict — known-equal-length zips in buffer layout code
+]
+
+[lint.isort]
+known-first-party = ["training_engine_tensor"]
+
+[lint.per-file-ignores]
+"__init__.py" = ["F401"]  # re-exports are intentional in __init__

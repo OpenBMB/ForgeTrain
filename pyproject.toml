@@ -1,0 +1,18 @@
+# ForgeTrain monorepo top-level metadata.
+#
+# This file is *not* a published Python package. It only carries monorepo-
+# wide metadata. Each subproject owns its own `pyproject.toml` and its own
+# lint configuration:
+#
+# - harness/pyproject.toml      defines `training-engine-harness` (the producer)
+#                               + the harness-side ruff/mypy rules.
+# - train_engine/pyproject.toml defines `training-engine-tensor` (the produced
+#                               training engine).
+# - train_engine/ruff.toml      keeps the engine-side ruff rules (the engine
+#                               is a vendored snapshot from upstream and uses
+#                               a deliberately narrower rule set).
+
+[tool.forgetrain]
+producer = "harness"
+product  = "train_engine"
+license  = "Apache-2.0"

@@ -1,0 +1,3 @@
+env_var = "OP_GEMM_FC2"
+default = "v12"
+available = ["baseline", "v1", "v2", "v4", "v5", "v6", "v7", "v8", "v9", "v10", "v11", "v12"]

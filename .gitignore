@@ -1,0 +1,125 @@
+# =============================================================================
+# Python
+# =============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+*.so
+.Python
+build/
+dist/
+
+# =============================================================================
+# Virtual envs
+# =============================================================================
+.venv/
+.venv-*/
+venv/
+env/
+.env
+
+# =============================================================================
+# Tooling caches
+# =============================================================================
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.tox/
+.coverage
+.coverage.*
+htmlcov/
+.cache/
+
+# =============================================================================
+# IDE / editor
+# =============================================================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# =============================================================================
+# Harness runtime / agent loop artifacts (harness/)
+# =============================================================================
+.artifacts/
+ops_worktree/
+harness/workload/notes/*.bak
+harness/workload/notes/*.tmp
+harness/config/harness.local.toml
+harness/config/ref.toml
+harness/config/data.toml
+harness/config/remote.toml
+harness/config/agent.toml
+harness/config/eval.toml
+
+# =============================================================================
+# Agent-loop dev output — local-only, MUST NEVER be pushed to origin.
+#
+# The agent loop writes per-round journals, M1 bridge scripts, and engine
+# implementation files into the worktree. These are intermediate dev
+# artifacts; only the harness contract surface (config, prompts, framework
+# guards) should land in origin. Keep these patterns in sync with
+# prompt/develop_prompt/torch/stage1.md "Files agent owns" list.
+# =============================================================================
+harness/workload/notes/perf_log.md
+harness/workload/notes/recommendation.md
+harness/workload/notes/review.md
+harness/tools/m1_bridge/
+
+# Engine implementation files written by the agent during M1-M6. Only the
+# harness-owned stubs (__init__.py, train_loop.py) are git-tracked as the
+# public CLI entry contract; every other file under training_engine_tensor/
+# is dev output and must not be added via `git add .`.
+harness/workload/src/training_engine_tensor/*
+!harness/workload/src/training_engine_tensor/__init__.py
+!harness/workload/src/training_engine_tensor/train_loop.py
+
+# =============================================================================
+# Training engine runtime artifacts (train_engine/)
+# =============================================================================
+# Persistent kernel cache (per image_tag .so + .o produced on remote pods).
+# Owned by entry_train.sh / entry_precompile.sh / precompile_ops.py.
+# Per-checkout to follow code; do not ship in git.
+train_engine/.persist_cache/
+
+# Default in-repo SAVE_DIR root (entry_train.sh defaults to
+# ${ENGINE_ROOT}/.checkpoints/<stage> when SAVE_DIR is not exported by the
+# spec). Real production runs override SAVE_DIR to a shared-FS path.
+train_engine/.checkpoints/
+
+# HuggingFace deps installed via `pip install --target` by
+# scripts/entry_hf_pretrain.sh. Pod-side artifact; never commit.
+train_engine/.hf_site/
+
+# Per-developer remote-run.sh overrides (REMOTE_HOST / REMOTE_PORT /
+# REMOTE_ROOT). Personal devspace endpoint; never commit.
+train_engine/.remote-run.local.sh
+
+# =============================================================================
+# Training / model artifacts (never commit weights or captured tensors)
+# =============================================================================
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.ckpt
+*.onnx
+*.npz
+*.npy
+checkpoints/
+trace_outputs/
+
+# =============================================================================
+# Logs
+# =============================================================================
+*.log
+logs/
+
+# =============================================================================
+# Per-machine env files (the ref-as-gate contract reads from env, not files)
+# =============================================================================
+.envrc

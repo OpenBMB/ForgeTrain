@@ -1,0 +1,84 @@
+{
+  "task": {
+    "command": [
+      "bash",
+      "${HOME}/training_engine/scripts/entry_hf_pretrain.sh"
+    ],
+    "entry": "bash ${HOME}/training_engine/scripts/entry_hf_pretrain.sh",
+    "envVars": [
+      {"name": "HF_DATASET", "value": "${HOME}/gsm8k"},
+      {"name": "HF_DATASET_CONFIG", "value": "main"},
+      {"name": "HF_DATASET_SPLIT", "value": "train"},
+      {"name": "HF_TEXT_TEMPLATE", "value": "Question: {question}\nAnswer: {answer}"},
+
+      {"name": "TOKENIZER_PATH", "value": "${HOME}/models/MiniCPM4-0.5B"},
+
+      {"name": "GLOBAL_BATCH_SIZE", "value": "1280"},
+      {"name": "MICRO_BATCH_SIZE", "value": "10"},
+      {"name": "SEQ_LENGTH", "value": "4096"},
+      {"name": "NUM_STEPS", "value": "50"},
+      {"name": "SEED", "value": "1234"},
+
+      {"name": "MTP_NUM_LAYERS", "value": "0"},
+
+      {"name": "PYTORCH_CUDA_ALLOC_CONF", "value": "expandable_segments:True"},
+      {"name": "CUBLAS_WORKSPACE_CONFIG", "value": ":4096:8"},
+      {"name": "CUDA_DEVICE_MAX_CONNECTIONS", "value": "1"},
+      {"name": "NVTE_FUSED_ATTN", "value": "1"},
+      {"name": "NVTE_ALLOW_NONDETERMINISTIC_ALGO", "value": "1"},
+
+      {"name": "FUSED_OPS", "value": "1"},
+      {"name": "FUSE_DIRECT_ATTN", "value": "1"},
+      {"name": "TE_ROPE", "value": "1"},
+      {"name": "FP32_GRAD_ACCUM", "value": "1"},
+      {"name": "USE_FUSED_NORM_BWD", "value": "1"},
+      {"name": "GRAD_DIAG", "value": "1"},
+      {"name": "MULTI_TENSOR_ADAM", "value": "0"},
+      {"name": "RANDOM_INIT", "value": "0"},
+      {"name": "VOCAB_SIZE", "value": "73448"},
+
+      {"name": "CUSTOM_GEMM", "value": "1"},
+      {"name": "OP_ATTENTION", "value": "v1"},
+      {"name": "OP_GEMM_QKV_PROJ", "value": "v1"},
+      {"name": "OP_GEMM_ATTN_OUT_PROJ", "value": "v1"},
+      {"name": "OP_GEMM_FC1", "value": "v1"},
+      {"name": "OP_GEMM_FC2", "value": "v1"},
+      {"name": "OP_GEMM_OUTPUT", "value": "v1"},
+      {"name": "FUSE_GEMM_PAD", "value": "0"},
+
+      {"name": "AOP_NO_OUT_CACHE", "value": "1"},
+      {"name": "AOP_NO_DI_CACHE", "value": "1"},
+      {"name": "AOP_NO_DW_CACHE", "value": "1"},
+      {"name": "AOP_NO_VIEW_CACHE", "value": "1"},
+      {"name": "QKV_PERSISTENT_DISABLE_CACHE", "value": "1"},
+
+      {"name": "EMIT_LOSS_LINES", "value": "1"},
+      {"name": "ASYNC_LOSS_AR", "value": "1"},
+      {"name": "WGRAD_OVERLAP", "value": "1"},
+      {"name": "WGRAD_BUCKET_TARGET_ELEMS", "value": "419430400"},
+      {"name": "OPT_ALLGATHER_OVERLAP", "value": "0"},
+      {"name": "SHARDED_OPTIMIZER", "value": "1"},
+      {"name": "ACCUM_STREAM_OVERLAP", "value": "0"},
+      {"name": "DATA_PREFETCH_DEPTH", "value": "1"},
+      {"name": "FORWARD_CUDA_GRAPH", "value": "1"},
+      {"name": "STEP_CUDA_GRAPH", "value": "0"},
+      {"name": "STEP_CUDA_GRAPH_ACCUM", "value": "0"},
+      {"name": "STEP_CUDA_GRAPH_REDUCER", "value": "0"},
+      {"name": "STEP_CUDA_GRAPH_FULL", "value": "0"},
+      {"name": "STEP_CUDA_GRAPH_OPTIMIZER", "value": "0"},
+      {"name": "STEP_CUDA_GRAPH_NCCL_OPT", "value": "0"},
+      {"name": "CROSS_STEP_PIPELINE", "value": "0"},
+      {"name": "CLEAR_SAMPLER_STATE", "value": "1"},
+      {"name": "TORCH_NCCL_HEARTBEAT_TIMEOUT_SEC", "value": "1800"},
+
+      {"name": "CUTLASS_WHEELS_DIR", "value": "${HOME}/Train_engine/wheels"},
+      {"name": "CUTLASS_DSL_FALLBACK_DIR", "value": "${HOME}/nvidia_cutlass_dsl"}
+    ],
+    "resources": {
+      "cpu": 64,
+      "memory": "256Gi",
+      "gpuCount": 8,
+      "gpuModel": "h100"
+    }
+  }
+}

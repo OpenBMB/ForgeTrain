@@ -1,0 +1,45 @@
+# Env vars used by the attention output projection GEMM kernel.
+
+[env_vars]
+CUTEDSL_CACHE_ROOT = { default = "/tmp", description = "CuTeDSL kernel cache directory" }
+CUDA_HOME = { default = "/usr/local/cuda", description = "CUDA toolkit path" }
+AOP_NO_STREAM_CACHE = { default = "0", description = "Disable stream cache" }
+AOP_NO_DW_CACHE = { default = "0", description = "Disable dW cache" }
+AOP_NO_DI_CACHE = { default = "0", description = "Disable dI cache" }
+AOP_NO_OUT_CACHE = { default = "0", description = "Disable output cache" }
+AOP_NO_VIEW_CACHE = { default = "0", description = "Disable view cache" }
+AOP_EXPORT_DIR = { default = "", description = "Export directory for kernels" }
+AOP_FWD_TILE_M = { default = "128", description = "Forward tile M" }
+AOP_FWD_TILE_N = { default = "256", description = "Forward tile N" }
+AOP_FWD_CLU_M = { default = "1", description = "Forward cluster M" }
+AOP_FWD_CLUSTER_M = { default = "1", description = "Forward cluster M (alias)" }
+AOP_FWD_CLU_N = { default = "1", description = "Forward cluster N" }
+AOP_FWD_CLUSTER_N = { default = "1", description = "Forward cluster N (alias)" }
+AOP_FWD_SW = { default = "1", description = "Forward swizzle" }
+AOP_FWD_RAS_M = { default = "0", description = "Forward raster M" }
+AOP_FWD_MMA_K = { default = "4", description = "Forward MMA K" }
+AOP_FWD_EPI = { default = "8", description = "Forward epilogue" }
+AOP_DGRAD_TILE_M = { default = "128", description = "Dgrad tile M" }
+AOP_DGRAD_TILE_N = { default = "256", description = "Dgrad tile N" }
+AOP_DGRAD_CLU_M = { default = "1", description = "Dgrad cluster M" }
+AOP_DGRAD_CLUSTER_M = { default = "1", description = "Dgrad cluster M (alias)" }
+AOP_DGRAD_CLU_N = { default = "1", description = "Dgrad cluster N" }
+AOP_DGRAD_CLUSTER_N = { default = "1", description = "Dgrad cluster N (alias)" }
+AOP_DGRAD_SW = { default = "1", description = "Dgrad swizzle" }
+AOP_DGRAD_RAS_M = { default = "0", description = "Dgrad raster M" }
+AOP_DGRAD_MMA_K = { default = "4", description = "Dgrad MMA K" }
+AOP_DGRAD_EPI = { default = "8", description = "Dgrad epilogue" }
+AOP_WGRAD_TILE_M = { default = "128", description = "Wgrad tile M" }
+AOP_WGRAD_TILE_N = { default = "128", description = "Wgrad tile N" }
+AOP_WGRAD_CLU_M = { default = "1", description = "Wgrad cluster M" }
+AOP_WGRAD_CLUSTER_M = { default = "1", description = "Wgrad cluster M (alias)" }
+AOP_WGRAD_CLU_N = { default = "2", description = "Wgrad cluster N" }
+AOP_WGRAD_CLUSTER_N = { default = "2", description = "Wgrad cluster N (alias)" }
+AOP_WGRAD_SW = { default = "1", description = "Wgrad swizzle" }
+AOP_WGRAD_RAS_M = { default = "0", description = "Wgrad raster M" }
+AOP_WGRAD_RASTER_M = { default = "0", description = "Wgrad raster M (alias)" }
+AOP_WGRAD_MMA_K = { default = "4", description = "Wgrad MMA K" }
+AOP_WGRAD_EPI = { default = "4", description = "Wgrad epilogue" }
+AOP_WGRAD_SPLITS = { default = "2", description = "Wgrad splits" }
+AOP_WGRAD_K = { default = "40960", description = "Wgrad K total" }
+OP_GEMM_ATTN_OUT_PROJ_BACKEND = { default = "jit", description = "Backend: jit or cexport" }

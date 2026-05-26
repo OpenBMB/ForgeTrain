@@ -1,0 +1,68 @@
+# ============================================================================
+# MiniCPM4 0.5B 模型 & 训练参数（本地机器可读格式）
+#
+# 参数调度层次（从权威到消费）:
+#
+#   L0  参考脚本 (唯一真值)
+#       workload/reference/train_minicpm4_0.5b_fineweb.sh
+#       workload/reference/run_minicpm4_0.5b_fineweb_cctl.sh
+#       ─ 远端 Megatron 仓库中的原始训练脚本，通过 SSH 拉取。
+#       ─ 经 cctl#282258 验证：脚本默认值 == 实际运行参数（无 env override）。
+#       ─ 换模型时，先改这两个脚本，再据此刷新本文件。
+#
+#   L1  本文件 (model_spec.toml) — 从 L0 脚本人工提取
+#       ─ 提供 Python/TOML 友好的结构化格式，供 harness 代码读取。
+#       ─ 本文件本身不是真值；如果与 L0 脚本有冲突，以 L0 为准。
+#
+#   L2  config.py — 从 L1 自动加载
+#       ─ workload/src/training_engine_tensor/config.py
+#       ─ 用 tomllib 读取本文件，导出 Python 常量 + build_megatron_args()。
+#
+#   L3  gate 脚本 / config.toml / rules.md — 消费 L2
+#       ─ 6 个 test_*.py 脚本通过 config.build_megatron_args() 获取参数。
+#       ─ config.toml 中 micro_batch_size / seq_length 等运行时参数需与 L1 一致。
+#
+# ============================================================================
+
+[model]
+vocab_size = 73448
+hidden_size = 1024
+num_layers = 24
+num_attention_heads = 16
+num_query_groups = 2
+ffn_hidden_size = 4096
+seq_length = 4096
+max_position_embeddings = 4096
+norm_epsilon = 1e-6
+rotary_base = 10000
+init_method_std = 0.1
+make_vocab_size_divisible_by = 1
+
+[tokenizer]
+# Tokenizer 文件本体是 cluster-local 资产，不入库；这里只保留元数据契约。
+# 当前 ``[tokenizer]`` section 还没被 ``training_engine_tensor`` 直接读
+# （tokenizer 路径走两条独立通道）：
+#   - HF dataset 路径：``--tokenizer-path`` CLI / spec env ``TOKENIZER_PATH``
+#     被 ``hf_dataloader._load_tokenizer`` 用 transformers.AutoTokenizer 加载，
+#     训练 / 评测里都会真正使用。
+#   - modelbest_sdk 路径：数据流已经预 tokenize，运行时不再读 tokenizer。
+# 因此 ``model = ""`` 的语义是 "本仓库不预设默认路径"，由 spec envVars /
+# CLI 决定具体文件位置，而不是 "tokenizer 不会被使用"。
+model = ""
+type = "Llama2Tokenizer"
+
+[training]
+micro_batch_size = 10
+global_batch_size = 160
+lr = 3e-4
+min_lr = 0.0
+train_iters = 250000
+lr_decay_iters = 240000
+lr_decay_style = "WSD"
+lr_wsd_decay_style = "exponential"
+lr_wsd_decay_iters = 3000
+lr_warmup_iters = 2000
+weight_decay = 0.1
+adam_beta1 = 0.9
+adam_beta2 = 0.95
+clip_grad = 1.0

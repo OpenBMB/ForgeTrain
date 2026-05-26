@@ -1,0 +1,17 @@
+# Env vars used by the attention operator.
+
+[env_vars]
+FLASH_ATTENTION_ARCH = { default = "", description = "Override flash attention architecture" }
+FA_CLC = { default = "0", description = "Enable CLC for flash attention" }
+FA_DISABLE_2CTA = { default = "0", description = "Disable 2-CTA flash attention variant" }
+CUTE_DSL_PTXAS_PATH = { default = "", description = "Custom ptxas path for CuTeDSL" }
+ATTN_V1_ALLOW_NON_FA4_FWD = { default = "0", description = "Allow non-FA4 forward path in attention v1" }
+ATTN_V1_ALLOW_MANUAL_BWD_FALLBACK = { default = "0", description = "Allow manual backward fallback in attention v1" }
+ATTN_V1_FWD_BACKEND = { default = "flash_dsl", description = "Forward backend for attention v1: 'flash_dsl' (in-tree flash_attn_dsl SM90 forward, fully GQA-native, default) or 'fa4' (FA4 DSL spec, GQA-aware via pack_gqa)" }
+ATTN_V1_BWD_BACKEND = { default = "flash_dsl", description = "Backward backend for attention v1: 'flash_dsl' (3-kernel CuTe DSL pipeline, ~1.9ms/45.7% MFU on H100, default), 'fa4' (FA4 interface_bwd_spec), or 'manual' (PyTorch autograd, debug only)" }
+BWD_TILE_M = { default = "64", description = "flash_dsl backward main kernel tile M" }
+BWD_TILE_N = { default = "128", description = "flash_dsl backward main kernel tile N" }
+BWD_SDP_SWAPAB = { default = "1", description = "flash_dsl backward: swap AB on S/dP GEMM (enables RS dKV path)" }
+BWD_DQ_SINGLE_WG = { default = "1", description = "flash_dsl backward: WG0-only dQ GEMM" }
+BWD_PYTORCH_PREPOST = { default = "0", description = "flash_dsl backward: use PyTorch ref for pre/post (debug)" }
+BWD_SKIP_MAIN = { default = "0", description = "flash_dsl backward: skip main kernel (debug)" }

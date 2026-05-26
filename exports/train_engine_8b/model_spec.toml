@@ -1,0 +1,81 @@
+# ============================================================================
+# MiniCPM4 8B model & training parameters (Single Source of Truth, L1).
+#
+# Layout / consumption:
+#
+#   L1  this file (model_spec.toml)
+#       Authoritative architectural and default training constants for the
+#       MiniCPM4-8B pretraining engine.  Authored once from the reference
+#       configuration and kept stable; downstream layers MUST load values
+#       from here rather than hardcode them.
+#
+#   L2  src/training_engine_tensor/config.py
+#       Reads this file via tomllib at import time and exports module-level
+#       Python constants (NUM_LAYERS, HIDDEN_SIZE, ...) plus the FLOPs
+#       counter `compute_training_flops`.
+#
+#   L3  CLI / EngineConfig
+#       src/training_engine_tensor/__main__.py + engine_config.py mirror
+#       the [training] defaults onto argparse / dataclass fields so a
+#       single CLI invocation can override any value at runtime.
+#
+# Everything below is geometry-only or default-value; runtime knobs that
+# vary per job (dataset path, tokenizer path, num_steps, seed, ...) are
+# driven by the CLI / environment, NOT by this file.
+# ============================================================================
+
+[model]
+vocab_size = 73448
+# padded_vocab_size matches the HF tokenizer (`len(tokenizer)=73448`) which
+# is already a multiple of `make_vocab_size_divisible_by * tensor_model_
+# parallel_size = 4`, so no padding rows are added.  Kept here as the
+# authoritative L1 default; can still be overridden via the CLI for
+# bring-up of alternative tokenizers.
+padded_vocab_size = 73448
+hidden_size = 4096
+num_layers = 32
+num_attention_heads = 32
+num_query_groups = 2
+head_dim = 128
+ffn_hidden_size = 16384
+seq_length = 4096
+max_position_embeddings = 4096
+norm_epsilon = 1e-5
+rotary_base = 10000
+init_method_std = 0.02
+make_vocab_size_divisible_by = 4
+
+[tokenizer]
+# Tokenizer is a runtime asset, not part of the source tree.  The HF data
+# pipeline expects a directory loadable by `transformers.AutoTokenizer`
+# and is selected via the `--tokenizer-path` CLI flag (or `TOKENIZER_PATH`
+# env in the bare-metal launcher).  Type is fixed.
+type = "Llama2Tokenizer"
+
+[training]
+# Default optimizer + LR schedule.  Per-job overrides happen on the CLI.
+micro_batch_size = 2
+grad_accum_steps = 8
+# global_batch_size = micro_batch_size * grad_accum_steps * data_parallel_size
+# (= 2 * 8 * 4 on the canonical 8-GPU layout). Override `--grad-accum-steps`
+# to 1 for the GBS=8 single-step path.
+global_batch_size = 64
+lr = 2.273e-4
+min_lr = 0.0
+lr_decay_iters = 1000000
+lr_decay_style = "WSD"
+lr_wsd_decay_style = "exponential"
+lr_wsd_decay_iters = 0
+lr_warmup_iters = 2000
+weight_decay = 0.1
+adam_beta1 = 0.9
+adam_beta2 = 0.95
+adam_eps = 1e-8
+clip_grad = 1.0
+
+[parallelism]
+# Tensor-parallel only.  Pipeline parallelism is not supported by this
+# single-host engine.  Sequence parallelism is intentionally not wired
+# (no use-case for 8B at seq=4096 on 8x H100).
+tensor_model_parallel_size = 2
+use_distributed_optimizer = true

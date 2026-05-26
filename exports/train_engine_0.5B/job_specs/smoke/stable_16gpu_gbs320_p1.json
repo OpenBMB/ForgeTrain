@@ -1,0 +1,69 @@
+{
+  "task": {
+    "command": [
+      "bash",
+      "${HOME}/training_engine_backup/scripts/entry_train.sh"
+    ],
+    "entry": "bash ${HOME}/training_engine_backup/scripts/entry_train.sh",
+    "envVars": [
+      {"name": "STAGE", "value": "stable"},
+
+      {"name": "GLOBAL_BATCH_SIZE", "value": "320"},
+      {"name": "MICRO_BATCH_SIZE", "value": "10"},
+      {"name": "NUM_STEPS", "value": "200"},
+      {"name": "SAVE_INTERVAL", "value": "999999"},
+      {"name": "WARMUP_ITERS", "value": "2000"},
+      {"name": "MAX_LR", "value": "1e-2"},
+      {"name": "MIN_LR", "value": "0"},
+      {"name": "LR_DECAY_ITERS", "value": "150000"},
+      {"name": "WSD_DECAY_ITERS", "value": "0"},
+      {"name": "MTP_NUM_LAYERS", "value": "0"},
+
+      {"name": "SAVE_DIR", "value": "${HOME}/checkpoints/smoke_stable_16gpu_gbs320_p1_flashdsl"},
+      {"name": "DATA_PATH_FILE", "value": "${HOME}/training_engine_backup/data/stable_0613_data_path_shandong.txt"},
+
+      {"name": "CUSTOM_GEMM", "value": "1"},
+      {"name": "OP_ATTENTION", "value": "v1"},
+      {"name": "ATTN_V1_FWD_BACKEND", "value": "flash_dsl"},
+      {"name": "OP_GEMM_QKV_PROJ", "value": "v1"},
+      {"name": "OP_GEMM_ATTN_OUT_PROJ", "value": "v1"},
+      {"name": "OP_GEMM_FC1", "value": "v1"},
+      {"name": "OP_GEMM_FC2", "value": "v1"},
+      {"name": "OP_GEMM_OUTPUT", "value": "v1"},
+      {"name": "FUSE_GEMM_PAD", "value": "0"},
+
+      {"name": "AOP_NO_OUT_CACHE", "value": "1"},
+      {"name": "AOP_NO_DI_CACHE", "value": "1"},
+      {"name": "AOP_NO_DW_CACHE", "value": "1"},
+      {"name": "AOP_NO_VIEW_CACHE", "value": "1"},
+      {"name": "QKV_PERSISTENT_DISABLE_CACHE", "value": "1"},
+
+      {"name": "EMIT_LOSS_LINES", "value": "1"},
+      {"name": "WGRAD_OVERLAP", "value": "1"},
+      {"name": "SHARDED_OPTIMIZER", "value": "1"},
+      {"name": "ACCUM_STREAM_OVERLAP", "value": "0"},
+      {"name": "DATA_PREFETCH_DEPTH", "value": "1"},
+      {"name": "STEP_CUDA_GRAPH", "value": "0"},
+      {"name": "STEP_CUDA_GRAPH_ACCUM", "value": "0"},
+      {"name": "STEP_CUDA_GRAPH_REDUCER", "value": "0"},
+
+      {"name": "CUTLASS_WHEELS_DIR", "value": "${HOME}/Train_engine/wheels"},
+      {"name": "CUTLASS_DSL_FALLBACK_DIR", "value": "${HOME}/nvidia_cutlass_dsl"}
+    ],
+    "resources": {
+      "cpu": 64,
+      "memory": "256Gi",
+      "gpuCount": 8,
+      "gpuModel": "h100"
+    },
+    "replicas": {
+      "masterResources": {
+        "cpu": 64,
+        "memory": "256Gi",
+        "gpuCount": 8,
+        "gpuModel": "h100"
+      },
+      "workerCount": 1
+    }
+  }
+}

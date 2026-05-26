@@ -1,0 +1,67 @@
+{
+  "_comment": "Smoke-test job spec template (1000-step GAS=1). Replace the scheduler-specific fields (project, cluster, resourcePoolId, filesystemId, image) with your platform's actual values before submitting; the envVars / command / resources blocks below are platform-agnostic.",
+  "task": {
+    "kind": "BATCH",
+    "project": "<YOUR_PROJECT>",
+    "cluster": "<YOUR_CLUSTER>",
+    "resourcePoolId": 0,
+    "image": "<YOUR_DOCKER_IMAGE>",
+    "namespace": "training",
+    "priority": "HIGH",
+    "filesystemId": 0,
+    "command": [
+      "bash",
+      "${HOME}/training_engine_8b/scripts/entry_hf_pretrain.sh"
+    ],
+    "entry": "bash ${HOME}/training_engine_8b/scripts/entry_hf_pretrain.sh",
+    "envVars": [
+      {"name": "ENGINE_ROOT", "value": "${HOME}/training_engine_8b"},
+
+      {"name": "HF_DATASET", "value": "${HOME}/fineweb"},
+      {"name": "HF_DATA_FORMAT", "value": "parquet"},
+      {"name": "HF_DATA_FILES", "value": "${HOME}/fineweb/*.parquet"},
+      {"name": "HF_DATASET_SPLIT", "value": "train"},
+      {"name": "HF_TEXT_TEMPLATE", "value": "{text}"},
+
+      {"name": "TOKENIZER_PATH", "value": "${HOME}/models/MiniCPM4-8B"},
+
+      {"name": "NUM_STEPS", "value": "1000"},
+      {"name": "GLOBAL_BATCH_SIZE", "value": "8"},
+      {"name": "MICRO_BATCH_SIZE", "value": "2"},
+      {"name": "GRAD_ACCUM_STEPS", "value": "1"},
+      {"name": "SEQ_LENGTH", "value": "4096"},
+      {"name": "SEED", "value": "1234"},
+
+      {"name": "CUSTOM_GEMM", "value": "1"},
+      {"name": "OP_GEMM_FC1", "value": "v1"},
+      {"name": "OP_GEMM_OUTPUT", "value": "v1"},
+      {"name": "OP_ATTENTION", "value": "v1"},
+
+      {"name": "PYTORCH_CUDA_ALLOC_CONF", "value": "expandable_segments:True"},
+      {"name": "CUBLAS_WORKSPACE_CONFIG", "value": ":4096:8"},
+      {"name": "CUDA_DEVICE_MAX_CONNECTIONS", "value": "1"},
+      {"name": "NVTE_FUSED_ATTN", "value": "1"},
+      {"name": "NVTE_ALLOW_NONDETERMINISTIC_ALGO", "value": "1"},
+      {"name": "TORCH_NCCL_HEARTBEAT_TIMEOUT_SEC", "value": "1800"},
+      {"name": "NCCL_ALGO", "value": "Ring"},
+
+      {"name": "FP32_GRAD_ACCUM", "value": "1"},
+      {"name": "TE_ROPE", "value": "1"},
+      {"name": "FUSED_OPS", "value": "1"},
+      {"name": "FUSE_DIRECT_ATTN", "value": "1"},
+      {"name": "GRAD_DIAG", "value": "1"},
+
+      {"name": "CUTLASS_DSL_PATH", "value": "${HOME}/nvidia_cutlass_dsl"},
+      {"name": "CUTE_DSL_CACHE_DIR", "value": "${HOME}/training_engine_8b/.artifacts/cute_cache"},
+
+      {"name": "OUTPUT_DIR", "value": "${HOME}/training_engine_8b/job_runs/hf_fineweb_8gpu_gas1"},
+      {"name": "EXPORT_REPORT", "value": "${HOME}/training_engine_8b/job_runs/hf_fineweb_8gpu_gas1/report.json"}
+    ],
+    "resources": {
+      "cpu": 64,
+      "memory": "800Gi",
+      "gpuCount": 8
+    },
+    "gpuModel": "h100"
+  }
+}

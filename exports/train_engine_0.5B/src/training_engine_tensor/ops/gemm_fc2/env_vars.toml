@@ -1,0 +1,7 @@
+# Env vars used by the FC2 GEMM kernel.
+
+[env_vars]
+CUTEDSL_CACHE_ROOT = { default = "/tmp", description = "CuTeDSL kernel cache directory" }
+CUDA_HOME = { default = "/usr/local/cuda", description = "CUDA toolkit path" }
+CUTLASS_INSTALL_DIR = { default = "", description = "CUTLASS install directory" }
+FC2_AOT = { default = "1", description = "Enable AOT compilation (0 = JIT fallback)" }

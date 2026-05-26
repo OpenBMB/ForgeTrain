@@ -1,0 +1,23 @@
+# Env vars used by the output projection GEMM kernel.
+
+[env_vars]
+CUTEDSL_CACHE_ROOT = { default = "/tmp", description = "CuTeDSL kernel cache directory" }
+CUDA_HOME = { default = "/usr/local/cuda", description = "CUDA toolkit path" }
+GEMM_OUT_FWD_TILE_M = { default = "128", description = "Forward tile M" }
+GEMM_OUT_FWD_TILE_N = { default = "256", description = "Forward tile N" }
+GEMM_OUT_FWD_CL_M = { default = "2", description = "Forward cluster M" }
+GEMM_OUT_FWD_CL_N = { default = "1", description = "Forward cluster N" }
+GEMM_OUT_FWD_SW = { default = "8", description = "Forward swizzle" }
+GEMM_OUT_FWD_RASM = { default = "0", description = "Forward raster M" }
+GEMM_OUT_FWD_AB = { default = "3", description = "Forward AB config" }
+GEMM_OUT_FWD_EP = { default = "3", description = "Forward epilogue" }
+GEMM_OUT_FWD_MMAK = { default = "", description = "Forward MMA K" }
+GEMM_OUT_WGRAD_TILE_M = { default = "128", description = "Wgrad tile M" }
+GEMM_OUT_WGRAD_TILE_N = { default = "256", description = "Wgrad tile N" }
+GEMM_OUT_WGRAD_CL_M = { default = "1", description = "Wgrad cluster M" }
+GEMM_OUT_WGRAD_CL_N = { default = "1", description = "Wgrad cluster N" }
+GEMM_OUT_WGRAD_SW = { default = "1", description = "Wgrad swizzle" }
+GEMM_OUT_WGRAD_RASM = { default = "0", description = "Wgrad raster M" }
+GEMM_OUT_WGRAD_AB = { default = "", description = "Wgrad AB config" }
+GEMM_OUT_WGRAD_EP = { default = "", description = "Wgrad epilogue" }
+GEMM_OUT_WGRAD_MMAK = { default = "", description = "Wgrad MMA K" }

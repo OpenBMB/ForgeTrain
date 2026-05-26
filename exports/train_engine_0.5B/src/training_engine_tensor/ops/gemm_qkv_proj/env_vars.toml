@@ -1,0 +1,45 @@
+# Env vars used by the QKV projection GEMM kernel.
+# These are JIT/benchmark tuning knobs, not behavioral EngineConfig flags.
+
+[env_vars]
+CUTEDSL_CACHE_ROOT = { default = "/tmp", description = "CuTeDSL kernel cache directory" }
+CUDA_HOME = { default = "/usr/local/cuda", description = "CUDA toolkit path" }
+CUTLASS_INSTALL_DIR = { default = "", description = "CUTLASS install directory" }
+QKV_AOT = { default = "1", description = "Enable AOT compilation (0 = JIT)" }
+QKV_DISABLE_CUSTOM_REDUCE = { default = "0", description = "Disable custom reduce kernel" }
+QKV_REDUCE_LOAD_VERBOSE = { default = "0", description = "Verbose logging for reduce kernel loading" }
+QKV_REDUCE_SKIP_SELFTEST = { default = "0", description = "Skip reduce kernel self-test" }
+QKV_WGRAD_STREAM_PRIORITY = { default = "-1", description = "CUDA stream priority for wgrad" }
+QKV_PERSISTENT_DISABLE_CACHE = { default = "0", description = "Disable persistent kernel cache" }
+QKV_REDUCE_VARIANT = { default = "v48", description = "Reduce kernel variant" }
+QKV_WGRAD_SPLITS = { default = "4", description = "Number of wgrad splits" }
+QKV_BWD_OVERLAP = { default = "1", description = "Enable backward overlap" }
+QKV_DISABLE_REDUCE_V48 = { default = "0", description = "Disable v48 reduce variant" }
+QKV_REDUCE_BUILD_DIR = { default = "", description = "Custom build directory for reduce kernel" }
+QKV_REDUCE_V48_BUILD_DIR = { default = "", description = "Custom build directory for v48 reduce kernel" }
+
+# Dynamic per-direction tuning knobs (used via f"QKV_{FWD|DGRAD|WGRAD}_*")
+QKV_FWD_TILE = { default = "", description = "Forward tile M,N (e.g. 128,256)" }
+QKV_FWD_CLUSTER = { default = "", description = "Forward cluster M,N" }
+QKV_FWD_SWIZZLE = { default = "", description = "Forward swizzle size" }
+QKV_FWD_RASTER = { default = "", description = "Forward raster direction (M/N)" }
+QKV_FWD_MAXACT = { default = "", description = "Forward max active CTAs" }
+QKV_FWD_INSTK = { default = "", description = "Forward MMA inst tile K" }
+QKV_FWD_EPISTAGE = { default = "", description = "Forward epilogue stage" }
+QKV_FWD_PERSISTENT = { default = "0", description = "Forward persistent kernel mode" }
+QKV_DGRAD_TILE = { default = "", description = "Dgrad tile M,N" }
+QKV_DGRAD_CLUSTER = { default = "", description = "Dgrad cluster M,N" }
+QKV_DGRAD_SWIZZLE = { default = "", description = "Dgrad swizzle size" }
+QKV_DGRAD_RASTER = { default = "", description = "Dgrad raster direction (M/N)" }
+QKV_DGRAD_MAXACT = { default = "", description = "Dgrad max active CTAs" }
+QKV_DGRAD_INSTK = { default = "", description = "Dgrad MMA inst tile K" }
+QKV_DGRAD_EPISTAGE = { default = "", description = "Dgrad epilogue stage" }
+QKV_DGRAD_PERSISTENT = { default = "0", description = "Dgrad persistent kernel mode" }
+QKV_WGRAD_TILE = { default = "", description = "Wgrad tile M,N" }
+QKV_WGRAD_CLUSTER = { default = "", description = "Wgrad cluster M,N" }
+QKV_WGRAD_SWIZZLE = { default = "", description = "Wgrad swizzle size" }
+QKV_WGRAD_RASTER = { default = "", description = "Wgrad raster direction (M/N)" }
+QKV_WGRAD_MAXACT = { default = "", description = "Wgrad max active CTAs" }
+QKV_WGRAD_INSTK = { default = "", description = "Wgrad MMA inst tile K" }
+QKV_WGRAD_EPISTAGE = { default = "", description = "Wgrad epilogue stage" }
+QKV_WGRAD_PERSISTENT = { default = "0", description = "Wgrad persistent kernel mode" }
