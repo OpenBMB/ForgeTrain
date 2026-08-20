@@ -6,7 +6,7 @@
 
 ### 由自主 Agent Loop 端到端产出的 LLM 预训练框架 + 配套 Harness 脚手架 *(即将开源)*
 
-**🤖 100% AI 自动编写 · 🚀 H100 上 MFU 44.13% · 📈 较 Megatron-LM 提升约 10% · ✅ 生产环境验证**
+**🤖 100% AI 自动编写 · 🚀 H100 上 MFU 44.13% · 📈 较 Megatron-LM 提升约 10% · ✅ 生产环境验证 · 📄 [论文](./assets/forgetrain_paper.pdf)**
 
 [English](./README.md) | [中文](./README_zh.md)
 
@@ -276,10 +276,11 @@ ForgeTrain 构建在以下优秀开源项目之上：
 如果本项目对你有帮助，欢迎引用：
 
 ```bibtex
-@software{forgetrain_2026,
-  title   = {ForgeTrain: An LLM Pretraining Framework Built End-to-End by an Autonomous Agent Loop},
-  year    = {2026},
-  url     = {https://github.com/OpenBMB/ForgeTrain}
+@misc{forgetrain2026,
+  title  = {ForgeTrain: Forging Production-Grade Training Frameworks via Harness-Driven AI Development},
+  author = {Zhu, Zhui and He, Qingfeng and Li, Shangzhan and Chen, Yaojian and Sun, Haojun and Li, Zhen and Li, Yuxuan and Liu, Zhiyuan},
+  year   = {2026},
+  url    = {https://github.com/OpenBMB/ForgeTrain}
 }
 ```
 
