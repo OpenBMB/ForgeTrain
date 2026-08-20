@@ -6,7 +6,7 @@
 
 ### An LLM Pretraining Framework Built End-to-End by an Autonomous Agent Loop + a matching Harness scaffolding *(coming soon)*
 
-**🤖 100% AI-Authored · 🚀 44.13% MFU on H100 · 📈 +10% over Megatron-LM · ✅ Production-Validated · 📄 [Paper](./assets/forgetrain_paper.pdf)**
+**🤖 100% AI-Authored · 🚀 44.13% MFU on H100 · 📈 +10% over Megatron-LM · ✅ Production-Validated**
 
 [English](./README.md) | [中文](./README_zh.md)
 

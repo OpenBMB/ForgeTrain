@@ -6,7 +6,7 @@
 
 ### 由自主 Agent Loop 端到端产出的 LLM 预训练框架 + 配套 Harness 脚手架 *(即将开源)*
 
-**🤖 100% AI 自动编写 · 🚀 H100 上 MFU 44.13% · 📈 较 Megatron-LM 提升约 10% · ✅ 生产环境验证 · 📄 [论文](./assets/forgetrain_paper.pdf)**
+**🤖 100% AI 自动编写 · 🚀 H100 上 MFU 44.13% · 📈 较 Megatron-LM 提升约 10% · ✅ 生产环境验证**
 
 [English](./README.md) | [中文](./README_zh.md)
 
