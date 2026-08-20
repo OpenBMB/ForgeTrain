@@ -10,6 +10,10 @@
 
 [English](./README.md) | [中文](./README_zh.md)
 
+<p align="center">
+  <a href="./assets/forgetrain_paper.pdf"><img src="https://img.shields.io/badge/Paper-ForgeTrain%20Technical%20Report-B31B1B?style=for-the-badge&logo=adobeacrobatreader&logoColor=white" alt="ForgeTrain Paper (PDF)"></a>
+</p>
+
 ---
 
 > **An LLM pretraining framework written end-to-end by an AI Agent Loop with zero human edits — plus the Harness that produced the pretraining framework *(coming soon)*.**
@@ -54,6 +58,7 @@
 
 ## 📢 News
 
+- 🎉 **[2026-08] Paper released!** — our technical report *“ForgeTrain: Forging Production-Grade Training Frameworks via Harness-Driven AI Development”* is now available — **[Read the PDF](./assets/forgetrain_paper.pdf)**
 - 📌 **[2026-05] ForgeTrain v0.1.0 released** — first public release of the training engine; the Harness that produced it is *coming soon*. MiniCPM4-0.5B pretrained on 64× H100, achieving **44.13% MFU**.
 
 ---
@@ -270,10 +275,11 @@ ForgeTrain builds on the work of several outstanding open-source projects:
 If you find this project useful, please consider citing:
 
 ```bibtex
-@software{forgetrain_2026,
-  title   = {ForgeTrain: An LLM Pretraining Framework Built End-to-End by an Autonomous Agent Loop},
-  year    = {2026},
-  url     = {https://github.com/OpenBMB/ForgeTrain}
+@misc{forgetrain2026,
+  title  = {ForgeTrain: Forging Production-Grade Training Frameworks via Harness-Driven AI Development},
+  author = {Zhu, Zhui and He, Qingfeng and Li, Shangzhan and Chen, Yaojian and Sun, Haojun and Li, Zhen and Li, Yuxuan and Liu, Zhiyuan},
+  year   = {2026},
+  url    = {https://github.com/OpenBMB/ForgeTrain}
 }
 ```
 
